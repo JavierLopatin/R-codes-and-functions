@@ -1,0 +1,23 @@
+## R-Script - Selecting hyperspectral bands for classification using Genetic Algorithm
+## author: Javier Lopatin & Fabian Fassnacht
+## mails: javierlopatin@gmail.com & fabian.fassnacht@kit.edu
+## last changes: 
+## info: - this script use the "galgo" package. This package require the R version 2.12.1
+##       - in the input data file should be ordered rows (not in columns). The first row should be "id", then "class" (with all the classes that you have) and finally the hyperspectral bands "B1",..., "Bn"
+
+# load galgo package
+library(galgo)
+
+# create the galgo function to select hyperspectral bands
+genetic.algorithm <- function(x){
+
+#preparar los especificaciones del algoritmo
+GALGO <-configBB.VarSel(file=x, classification.method="nearcent", chromosomeSize=4, 
+                                   maxSolutions=100, goalFitness= 0.99, saveVariable = "bb.5chr_1000sol_095goal", saveFrequency = 30)
+
+#correr galgo
+blast(GALGO)
+
+}
+
+
