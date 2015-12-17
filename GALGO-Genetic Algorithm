@@ -8,16 +8,27 @@
 # load galgo package
 library(galgo)
 
-# create the galgo function to select hyperspectral bands
-genetic.algorithm <- function(x){
+# set working directory 
+setwd("your/diretory")
+
+# select your data file
+data<-"galgo_20m_all.txt"
 
 #preparar los especificaciones del algoritmo
-GALGO <-configBB.VarSel(file=x, classification.method="nearcent", chromosomeSize=4, 
-                                   maxSolutions=100, goalFitness= 0.99, saveVariable = "bb.5chr_1000sol_095goal", saveFrequency = 30)
+Genetic.Algorith <-configBB.VarSel(file=data, classification.method="nearcent", chromosomeSize=4, 
+                   maxSolutions=100, goalFitness= 0.99, saveVariable = "bb.5chr_1000sol_095goal", saveFrequency = 30)
 
-#correr galgo
-blast(GALGO)
+# run galgo
+blast(Genetic.Algorith)
 
-}
+# see confusion matrix
+plot(Genetic.Algorith, type="confusion", set=c(1,0), splits=1)
+
+# see stability of the predictors
+plot(Genetic.Algorith, type="generankstability", xlim=c(0,41), xlab="Bands rank", ylab="Frequency chosen", main="")
+
+# see models in a "stepwise" fashion
+fsm <- forwardSelectionModels(Genetic.Algorith)
+fsm$models
 
 
