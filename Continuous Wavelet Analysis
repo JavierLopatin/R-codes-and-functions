@@ -1,0 +1,260 @@
+## R-Script - Obtaning the continuous wavelet analysis variables from hyperspectral data for the spectral and first derivative data
+## author: Javier Lopatin
+## mail: javierlopatin@gmail.com
+## last changes: 18-12-2015
+
+# data needed
+# spectra = the spectral bands ordered in columns
+# wavel = the band wavelength, i.g. seq(475, 875, 10)
+
+# load required packages
+library(Rwave)     #  For "Cauchy's" function 
+library(biwavelet) # For "morlet", "paul", "dog" functions
+
+# prepare paramiters 
+N  = length(spectra)     # N° bands
+N2 = length(spectra[,1]) # observations
+B  = wavel[2] - wavel[1] # band with
+refl_2<-t(spectra)       # transpose data
+refl_2<-data.frame(wavel, refl_2)
+
+##############################
+### Some usefull functions ###
+##############################
+
+# obtain the first derivative of the spectra
+first.deriv <- function(x, y){
+  refl_2<-t(x) # transpose data
+  refl_2<-data.frame(y, refl_2)
+  N  = length(x)     # N° bands
+  N2 = length(x[,1]) # observations
+  B  = y[2] - y[1]   # band with
+  der<-matrix(,N,N2) # sotored matrix
+  
+  for(i in 1:N){ 
+    for(i2 in 2:N2){
+      t1 <- refl_2[,i2]
+      der[i,i2]<- (((t1[i+1]) - (t1[i])) / B) 
+    }
+  }
+  der<-der[,-1] # delate column 1: only NA
+  der_1<-data.frame(y,der)
+  der_1<-na.omit(der_1)
+}
+
+# Plot all spectras
+plot.spectra <- function(x, y, ...){
+    # set parameters
+    N2 = length(x[,1]) # observations
+    refl_2<-t(x)       # transpose data
+    
+    plot(y, refl_2[,1],type="l", axes=T, ylim=c(min(x), max(x)), ...)
+    for(i in 1:N2-1){  lines(y, refl_2[, i+1])  }
+    
+  }
+
+# Plot all derivative spectras
+plot.deriv <- function(x, ...){
+    
+  plot(x[,1], x[,2],type="l", axes=T, ylim=c(min(x), max(x)), ...)
+  for(i in 1:(length(x[1,])-1)){  lines(x[,1], deriv[, i+1])  }
+  
+}
+
+# Obtain the first derivative
+der_1 <- first.deriv(spectra, wavel)
+
+############################################
+### Calculate wavelet for spectral input ###
+############################################
+
+## create empty matrix in which the transformations can be stored
+# Morlet
+morlet_refl_1<-data.frame(matrix(,N,N2))
+morlet_refl_2<-data.frame(matrix(,N,N2))
+morlet_refl_4<-data.frame(matrix(,N,N2))
+morlet_refl_8<-data.frame(matrix(,N,N2))
+morlet_refl_16<-data.frame(matrix(,N,N2))
+morlet_refl_32<-data.frame(matrix(,N,N2))
+# paul
+paul_refl_1<-data.frame(matrix(,N,N2))
+paul_refl_2<-data.frame(matrix(,N,N2))
+paul_refl_4<-data.frame(matrix(,N,N2))
+paul_refl_8<-data.frame(matrix(,N,N2))
+paul_refl_16<-data.frame(matrix(,N,N2))
+paul_refl_32<-data.frame(matrix(,N,N2))
+# dog
+dog_refl_1<-data.frame(matrix(,N,N2))
+dog_refl_2<-data.frame(matrix(,N,N2))
+dog_refl_4<-data.frame(matrix(,N,N2))
+dog_refl_8<-data.frame(matrix(,N,N2))
+dog_refl_16<-data.frame(matrix(,N,N2))
+dog_refl_32<-data.frame(matrix(,N,N2))
+# cauchy
+cauchy_refl_1<-data.frame(matrix(,N,N2))
+cauchy_refl_2<-data.frame(matrix(,N,N2))
+cauchy_refl_4<-data.frame(matrix(,N,N2))
+cauchy_refl_8<-data.frame(matrix(,N,N2))
+cauchy_refl_16<-data.frame(matrix(,N,N2))
+cauchy_refl_32<-data.frame(matrix(,N,N2))
+# squiz
+squiz_refl_1<-data.frame(matrix(,N,N2))
+squiz_refl_2<-data.frame(matrix(,N,N2))
+squiz_refl_4<-data.frame(matrix(,N,N2))
+squiz_refl_8<-data.frame(matrix(,N,N2))
+squiz_refl_16<-data.frame(matrix(,N,N2))
+squiz_refl_32<-data.frame(matrix(,N,N2))
+# gabor
+gabor_refl_1<-data.frame(matrix(,N,N2))
+gabor_refl_2<-data.frame(matrix(,N,N2))
+gabor_refl_4<-data.frame(matrix(,N,N2))
+gabor_refl_8<-data.frame(matrix(,N,N2))
+gabor_refl_16<-data.frame(matrix(,N,N2))
+gabor_refl_32<-data.frame(matrix(,N,N2))
+
+for(i in 1:N2){ 
+  # Morlet
+  morlet<-wt(refl_2[,c(1, i+1)], mother="morlet") 
+  morlet_refl_1[[i]]<-  Re(morlet$wave[1,])  # Sclae 1
+  morlet_refl_2[[i]]<-  Re(morlet$wave[2,] ) # Scale 2
+  morlet_refl_4[[i]]<-  Re(morlet$wave[4,])  # Scale 4
+  morlet_refl_8[[i]]<-  Re(morlet$wave[8,])  # Scale 8
+  morlet_refl_16[[i]]<- Re(morlet$wave[16,]) # Scale 16
+  morlet_refl_32[[i]]<- Re(morlet$wave[32,]) # Scale 32 
+  # paul
+  paul<-wt(refl_2[,c(1, i+1)], mother="paul") 
+  paul_refl_1[[i]]<-  Re(paul$wave[1,]) 
+  paul_refl_2[[i]]<-  Re(paul$wave[2,]) 
+  paul_refl_4[[i]]<-  Re(paul$wave[4,]) 
+  paul_refl_8[[i]]<-  Re(paul$wave[8,]) 
+  paul_refl_16[[i]]<- Re(paul$wave[16,] )
+  paul_refl_32[[i]]<- Re(paul$wave[32,]) 
+  # dog
+  dog<-wt(refl_2[,c(1, i+1)], mother="dog") 
+  dog_refl_1[[i]]<-  Re(dog$wave[1,]) 
+  dog_refl_2[[i]]<-  Re(dog$wave[2,] )
+  dog_refl_4[[i]]<-  Re(dog$wave[4,]) 
+  dog_refl_8[[i]]<-  Re(dog$wave[8,]) 
+  dog_refl_16[[i]]<- Re(dog$wave[16,]) 
+  dog_refl_32[[i]]<- Re(dog$wave[32,] )
+  # cauchy
+  cauchy <-cwtTh(refl_2[,i+1],noctave=5, nvoice=12, moments=20)
+  cauchy_refl_1[[i]]<-  Re(cauchy[,1]) 
+  cauchy_refl_2[[i]]<-  Re(cauchy[,2] )
+  cauchy_refl_4[[i]]<-  Re(cauchy[,4]) 
+  cauchy_refl_8[[i]]<-  Re(cauchy[,8]) 
+  cauchy_refl_16[[i]]<- Re(cauchy[,16]) 
+  cauchy_refl_32[[i]]<- Re(cauchy[,32])
+  # squiz
+  squiz<- cwtsquiz(refl_2[,i+1],noctave=5, nvoice=12)
+  squiz_refl_1[[i]]<-  Re(squiz[,1]) 
+  squiz_refl_2[[i]]<-  Re(squiz[,2])
+  squiz_refl_4[[i]]<-  Re(squiz[,4]) 
+  squiz_refl_8[[i]]<-  Re(squiz[,8]) 
+  squiz_refl_16[[i]]<- Re(squiz[,16]) 
+  squiz_refl_32[[i]]<- Re(squiz[,32])
+  # gabor
+  gabor<- cgt(refl_2[,i+1], nvoice=32)
+  gabor_refl_1[[i]]<-  Re(gabor[,1]) 
+  gabor_refl_2[[i]]<-  Re(gabor[,2])
+  gabor_refl_4[[i]]<-  Re(gabor[,4]) 
+  gabor_refl_8[[i]]<-  Re(gabor[,8]) 
+  gabor_refl_16[[i]]<- Re(gabor[,16]) 
+  gabor_refl_32[[i]]<- Re(gabor[,32])
+}
+
+#### Calculate wavelet for derivative input
+# Morlet
+morlet_deriv1_1<-data.frame(matrix(,N-1,N2-1))
+morlet_deriv1_2<-data.frame(matrix(,N-1,N2-1))
+morlet_deriv1_4<-data.frame(matrix(,N-1,N2-1))
+morlet_deriv1_8<-data.frame(matrix(,N-1,N2-1))
+morlet_deriv1_16<-data.frame(matrix(,N-1,N2-1))
+morlet_deriv1_32<-data.frame(matrix(,N-1,N2-1))
+# paul
+paul_deriv1_1<-data.frame(matrix(,N-1,N2-1))
+paul_deriv1_2<-data.frame(matrix(,N-1,N2-1))
+paul_deriv1_4<-data.frame(matrix(,N-1,N2-1))
+paul_deriv1_8<-data.frame(matrix(,N-1,N2-1))
+paul_deriv1_16<-data.frame(matrix(,N-1,N2-1))
+paul_deriv1_32<-data.frame(matrix(,N-1,N2-1))
+# dog
+dog_deriv1_1<-data.frame(matrix(,N-1,N2-1))
+dog_deriv1_2<-data.frame(matrix(,N-1,N2-1))
+dog_deriv1_4<-data.frame(matrix(,N-1,N2-1))
+dog_deriv1_8<-data.frame(matrix(,N-1,N2-1))
+dog_deriv1_16<-data.frame(matrix(,N-1,N2-1))
+dog_deriv1_32<-data.frame(matrix(,N-1,N2-1))
+# cauchy
+cauchy_deriv1_1<-data.frame(matrix(,N-1,N2-1))
+cauchy_deriv1_2<-data.frame(matrix(,N-1,N2-1))
+cauchy_deriv1_4<-data.frame(matrix(,N-1,N2-1))
+cauchy_deriv1_8<-data.frame(matrix(,N-1,N2-1))
+cauchy_deriv1_16<-data.frame(matrix(,N-1,N2-1))
+cauchy_deriv1_32<-data.frame(matrix(,N-1,N2-1))
+# squiz
+squiz_deriv1_1<-data.frame(matrix(,N-1,N2-1))
+squiz_deriv1_2<-data.frame(matrix(,N-1,N2-1))
+squiz_deriv1_4<-data.frame(matrix(,N-1,N2-1))
+squiz_deriv1_8<-data.frame(matrix(,N-1,N2-1))
+squiz_deriv1_16<-data.frame(matrix(,N-1,N2-1))
+squiz_deriv1_32<-data.frame(matrix(,N-1,N2-1))
+# gabor
+gabor_deriv1_1<-data.frame(matrix(,N-1,N2-1))
+gabor_deriv1_2<-data.frame(matrix(,N-1,N2-1))
+gabor_deriv1_4<-data.frame(matrix(,N-1,N2-1))
+gabor_deriv1_8<-data.frame(matrix(,N-1,N2-1))
+gabor_deriv1_16<-data.frame(matrix(,N-1,N2-1))
+gabor_deriv1_32<-data.frame(matrix(,N-1,N2-1))
+
+for(i in 1:N2){ 
+  # Morlet
+  morlet<-wt(der_1[, c(1, i+1)], mother="morlet") 
+  morlet_deriv1_1[[i]]<- Re( morlet$wave[1,]) 
+  morlet_deriv1_2[[i]]<-  Re(morlet$wave[2,]) 
+  morlet_deriv1_4[[i]]<-  Re(morlet$wave[4,]) 
+  morlet_deriv1_8[[i]]<-  Re(morlet$wave[8,]) 
+  morlet_deriv1_16[[i]]<- Re(morlet$wave[16,]) 
+  morlet_deriv1_32[[i]]<- Re(morlet$wave[32,] )
+  # paul
+  paul<-wt(der_1[,c(1, i+1)], mother="paul") 
+  paul_deriv1_1[[i]]<-  Re(paul$wave[1,])
+  paul_deriv1_2[[i]]<-  Re(paul$wave[2,])
+  paul_deriv1_4[[i]]<- Re(paul$wave[4,]) 
+  paul_deriv1_8[[i]]<- Re (paul$wave[8,]) 
+  paul_deriv1_16[[i]]<- Re(paul$wave[16,]) 
+  paul_deriv1_32[[i]]<-Re (paul$wave[32,]) 
+  # dog
+  dog<-wt(der_1[,c(1, i+1)], mother="dog") 
+  dog_deriv1_1[[i]]<-  Re(dog$wave[1,] )
+  dog_deriv1_2[[i]]<-  Re(dog$wave[2,] )
+  dog_deriv1_4[[i]]<- Re (dog$wave[4,]) 
+  dog_deriv1_8[[i]]<-  Re(dog$wave[8,]) 
+  dog_deriv1_16[[i]]<- Re(dog$wave[16,]) 
+  dog_deriv1_32[[i]]<- Re(dog$wave[32,]) 
+  # cauchy
+  cauchy <-cwtTh(der_1[,i+1],noctave=5, nvoice=12, moments=20)
+  cauchy_deriv1_1[[i]]<-  Re(cauchy[,1]) 
+  cauchy_deriv1_2[[i]]<-  Re(cauchy[,2])
+  cauchy_deriv1_4[[i]]<-  Re(cauchy[,4]) 
+  cauchy_deriv1_8[[i]]<-  Re(cauchy[,8]) 
+  cauchy_deriv1_16[[i]]<- Re(cauchy[,16]) 
+  cauchy_deriv1_32[[i]]<- Re(cauchy[,32] )
+  # squiz
+  squiz<- cwtsquiz(der_1[,i+1],noctave=5, nvoice=12)
+  squiz_deriv1_1[[i]]<-  Re(squiz[,1]) 
+  squiz_deriv1_2[[i]]<-  Re(squiz[,2])
+  squiz_deriv1_4[[i]]<-  Re(squiz[,4]) 
+  squiz_deriv1_8[[i]]<-  Re(squiz[,8]) 
+  squiz_deriv1_16[[i]]<- Re(squiz[,16]) 
+  squiz_deriv1_32[[i]]<- Re(squiz[,32])
+  # gabor
+  gabor<- cgt(der_1[,i+1], nvoice=32)
+  gabor_deriv1_1[[i]]<-  Re(gabor[,1]) 
+  gabor_deriv1_2[[i]]<-  Re(gabor[,2])
+  gabor_deriv1_4[[i]]<-  Re(gabor[,4]) 
+  gabor_deriv1_8[[i]]<-  Re(gabor[,8]) 
+  gabor_deriv1_16[[i]]<- Re(gabor[,16]) 
+  gabor_deriv1_32[[i]]<- Re(gabor[,32])
+  
+}
