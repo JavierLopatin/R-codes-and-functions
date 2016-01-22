@@ -5,11 +5,11 @@
 
 # data needed
 # spectra = the spectral bands ordered in columns
-# wavel = the band wavelength, i.g. seq(475, 875, 10)
+# wavel = the band wavelength, e.g. seq(475, 875, 10)
 
 # load required packages
 library(Rwave)     #  For "Cauchy's" function 
-library(biwavelet) # For "morlet", "paul", "dog" functions
+library(biwavelet) # For "morlet", "paul" and "dog" functions
 
 # prepare paramiters 
 N  = length(spectra)     # N° bands
