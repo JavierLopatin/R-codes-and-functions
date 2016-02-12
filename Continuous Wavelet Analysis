@@ -18,48 +18,20 @@ B  = wavel[2] - wavel[1] # band with
 refl_2<-t(spectra)       # transpose data
 refl_2<-data.frame(wavel, refl_2)
 
-##############################
-### Some usefull functions ###
-##############################
+############################################
+### Source usefull functions from GitHub ###
+############################################
+# Source an R-code from GitHub
+source_github <- function(u) {
+  # load package
+  require(RCurl)
+  # read script lines from website and evaluate
+  script <- getURL(u, ssl.verifypeer = FALSE)
+  eval(parse(text = script), envir=.GlobalEnv)
+} 
 
-# obtain the first derivative of the spectra
-first.deriv <- function(x, y){
-  refl_2<-t(x) # transpose data
-  refl_2<-data.frame(y, refl_2)
-  N  = length(x)     # N° bands
-  N2 = length(x[,1]) # observations
-  B  = y[2] - y[1]   # band with
-  der<-matrix(,N,N2) # sotored matrix
-  
-  for(i in 1:N){ 
-    for(i2 in 2:N2){
-      t1 <- refl_2[,i2]
-      der[i,i2]<- (((t1[i+1]) - (t1[i])) / B) 
-    }
-  }
-  der<-der[,-1] # delate column 1: only NA
-  der_1<-data.frame(y,der)
-  der_1<-na.omit(der_1)
-}
-
-# Plot all spectras
-plot.spectra <- function(x, y, ...){
-    # set parameters
-    N2 = length(x[,1]) # observations
-    refl_2<-t(x)       # transpose data
-    
-    plot(y, refl_2[,1],type="l", axes=T, ylim=c(min(x), max(x)), ...)
-    for(i in 1:N2-1){  lines(y, refl_2[, i+1])  }
-    
-  }
-
-# Plot all derivative spectras
-plot.deriv <- function(x, ...){
-    
-  plot(x[,1], x[,2],type="l", axes=T, ylim=c(min(apply(x[, 2:length(x[1, ])],1,min)), max(apply(x[, 2:length(x[1, ])],1,max))), ...)
-  for(i in 1:(length(x[1,])-1)){  lines(x[,1], deriv[, i+1])  }
-  
-}
+# run the GitHub code
+source_github("https://raw.githubusercontent.com/JavierLopatin/R-codes-and-functions/master/Remote%20Sensing%20Functions")
 
 # Obtain the first derivative
 der_1 <- first.deriv(spectra, wavel)
