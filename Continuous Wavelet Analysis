@@ -30,20 +30,25 @@ B  = wavel[2] - wavel[1] # band with
 refl_2<-t(spectra)       # transpose data
 refl_2<-data.frame(wavel, refl_2)
 
-############################################
-### Source usefull functions from GitHub ###
-############################################
-# Source an R-code from GitHub
-source_github <- function(u) {
-  # load package
-  require(RCurl)
-  # read script lines from website and evaluate
-  script <- getURL(u, ssl.verifypeer = FALSE)
-  eval(parse(text = script), envir=.GlobalEnv)
-} 
-
-# run the GitHub code
-source_github("https://raw.githubusercontent.com/JavierLopatin/R-codes-and-functions/master/Remote%20Sensing%20Functions")
+## first derivative of the reflectance data
+first.deriv <- function(x, y){
+  refl_2<-t(x) # transpose data
+  refl_2<-data.frame(y, refl_2)
+  N  = length(x)     # N° bands
+  N2 = length(x[,1]) # observations
+  B  = y[2] - y[1]   # band with
+  der<-matrix(,N,N2) # sotored matrix
+  
+  for(i in 1:N){ 
+    for(i2 in 2:N2){
+      t1 <- refl_2[,i2]
+      der[i,i2]<- (((t1[i+1]) - (t1[i])) / B) 
+    }
+  }
+  der<-der[,-1] # delate column 1: only NA
+  der_1<-data.frame(y,der)
+  der_1<-na.omit(der_1)
+}
 
 # Obtain the first derivative
 der_1 <- first.deriv(spectra, wavel)
