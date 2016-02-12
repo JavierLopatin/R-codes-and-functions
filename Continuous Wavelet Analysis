@@ -56,7 +56,7 @@ plot.spectra <- function(x, y, ...){
 # Plot all derivative spectras
 plot.deriv <- function(x, ...){
     
-  plot(x[,1], x[,2],type="l", axes=T, ylim=c(min(x), max(x)), ...)
+  plot(x[,1], x[,2],type="l", axes=T, ylim=c(min(apply(x[, 2:length(x[1, ])],1,min)), max(apply(x[, 2:length(x[1, ])],1,max))), ...)
   for(i in 1:(length(x[1,])-1)){  lines(x[,1], deriv[, i+1])  }
   
 }
