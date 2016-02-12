@@ -11,11 +11,11 @@
 ##### RESULTS ####
 ##################
 # the results obtained with the script are:
-# r2_all_ref
-# rmse_all_ref
-# r2_all_deriv 
-# rmse_all_deriv 
-# WA_fit : find the best family using autopls package. Input variable is the observed variable only. e.g. WA_fit(Biomass)
+# WAfit : find the best family using autopls package. Input variable is the observed variable only. e.g. WA_fit(Biomass)
+# r2_all_ref: list of all r2 of the reflectance data performed in WAfit
+# rmse_all_ref: list of all RMSE of the reflectance data performed in WAfit
+# r2_all_deriv: list of all r2 of the derivative data performed in WAfit
+# rmse_all_deriv:list of all RMSE of the derivative data performed in WAfit
 # bestWA: see wich WA variables had the best fit. The input data are: WA_fit (r2_all_ref, rmse_all_ref, r2_all_deriv, rmse_all_deriv) 
 # plotWA: plot the WA_fit results. The input data are the same that bestWA  
 
@@ -249,14 +249,11 @@ for(i in 1:N2){
 ###############################
 
 # function where x is the predictor variable
-WA_fit <- function(x){
+WAfit <- function(x){
 
 library(autopls)
 
-#########################
 ### Reflectance input ###
-#########################
-
 #
 ###### Morlet
 #
@@ -456,9 +453,7 @@ fit<-autopls(x ~.,  data=gabor_refl_32)
 r2_gabor_refl_32 <- R2(fit)
 rmse_gabor_refl_32 <- RMSEP(fit, estimate="CV")
 
-##############################
 ### 1rst derivative input ###
-#############################
 
 #
 ###### Morlet
