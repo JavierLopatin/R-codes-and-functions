@@ -144,8 +144,3 @@ plot.deriv <- function(x, ...){
   for(i in 1:(length(x[1,])-1)){  lines(x[,1], x[, i+1])}
 }
 
-plot(der[,1], der[,2], type="l", ylim=c(min(apply(der[, 2:length(der[1, ])],1,min)), max(apply(der[, 2:length(der[1, ])],1,max))))
-for(i in 1:(length(der[1,])-1)){  lines(der[,1], der[, i+1])  }
-
-
-
