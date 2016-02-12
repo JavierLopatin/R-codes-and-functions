@@ -1,0 +1,151 @@
+## R-Script - Usefull functions for Remote Sensing data
+## author: Javier Lopatin
+## mail:javierlopatin@gmail.com & javier.lopatin@kit.edu
+## last changes: 12/02/2016
+
+##################################################
+## 1- Vegetation indices for Multispectral data ##
+##################################################
+
+## ------------------------------------------------------------------------------------------------------##
+## Description: The script collect several vegetation indices for the analysis of multispectral data     ##
+## B, G, R, NIR = blue, green, red and infra red channels                                                ##   
+## waveB, waveG, waveR, waveNIR = wavelength of the channels                                             ##   
+## ------------------------------------------------------------------------------------------------------##
+
+msVI <- function (B, G, R, NIR, waveB, waveG, waveR, waveNIR){
+  # Difference vegetation index
+  DVI <- NIR - R
+ 
+  # Simple ratio
+  SR <- NIR/R
+ 
+  # Modified simple ratio
+  MSE <- ((NIR/R) - 1)/sqrt(1 + (NIR/R))
+ 
+  # Normalized difference vegetation index
+  NDVI <- ((NIR-R)/(NIR+R))
+ 
+  # Green normalized difference vegetation index (GNDVI)
+  GNDVI <- ((NIR-G)/(NIR+G))
+ 
+  # Transformed vegetation Index
+  TVI <- sqrt((NIR-R)/(NIR+R)) + 0.5
+ 
+  # Soil adjusted vegetation index
+  SAVI <- 1 + 0.5 * ((NIR-R)/(NIR+R+0.5))
+ 
+  # Modified soil adjusted vegetation index 2 (MSAVI2)
+  MSAVI2 <- (2 * NIR + 1 - sqrt(((2 * NIR + 1)^2) - 8 * (NIR * R)))/2
+ 
+  # GEMI (Global Environment Monitoring Index) 
+  n <- (2*(NIR^2- R^2)+1.5*NIR+0.5*R)/(NIR+R+0.5)
+  GEMI <- n*(1-0.25*n)*(R-0.125)/(1???R) 
+ 
+  # OSAVI (Optimized Soil Adjusted Vegetation Index)
+  OSAVI <- (NIR - R)/(NIR + R + 0.16) 
+ 
+  # SRxNDVI (Simple Ratio x Normalized Difference Vegetation Index 
+  SRxNDVI <- (NIR^2 - R)/(NIR + R^2) 
+ 
+  # Renormalized difference vegetation index (RDVI)
+  RDVI <- (NIR-R)/sqrt(NIR+R)
+ 
+  # Angular Vegetation Index B-G-R
+  v_a <- sqrt((waveB - waveG)^2+(B - G)^2)
+  v_b <- sqrt((waveG - waveR)^2+(G - R)^2)
+  v_c <- sqrt((waveB - waveR)^2+(B - R)^2)
+  
+  AVI_RGB1 <- acos((-v_c^2+v_a^2+v_b^2)/(2*v_a*v_b))
+  AVI_RGB2 <- acos((-v_b^2+v_a^2+v_c^2)/(2*v_a*v_c))
+  AVI_RGB3 <- acos((-v_a^2+v_b^2+v_c^2)/(2*v_b*v_c))
+  
+  AVI_RGB1[is.na(AVI_RGB1)] <- 0
+  AVI_RGB2[is.na(AVI_RGB2)] <- 0
+  AVI_RGB3[is.na(AVI_RGB3)] <- 0
+ 
+  # Angular Vegetation Index G-R-NIR
+  v_a <- sqrt((waveG - waveR)^2+(G - R)^2)
+  v_b <- sqrt((waveR - waveNIR)^2+(R - NIR)^2)
+  v_c <- sqrt((waveG - waveNIR)^2+(G - NIR)^2)
+  
+  AVI_GRNIR1 <- acos((-v_c^2+v_a^2+v_b^2)/(2*v_a*v_b))
+  AVI_GRNIR2 <- acos((-v_b^2+v_a^2+v_c^2)/(2*v_a*v_c))
+  AVI_GRNIR3 <- acos((-v_a^2+v_b^2+v_c^2)/(2*v_b*v_c))
+  
+  AVI_GRNIR1[is.na(AVI_GRNIR1)] <- 0
+  AVI_GRNIR2[is.na(AVI_GRNIR2)] <- 0
+  AVI_GRNIR3[is.na(AVI_GRNIR3)] <- 0
+  
+  # store results
+  output <- data.frame(DVI, SR, MSE, NDVI, GNDVI, TVI, SAVI, MSAVI2, GEMI,  OSAVI, SRxNDVI,
+                       RDVI, AVI_RGB1, AVI_RGB2, AVI_RGB3, AVI_GRNIR1, AVI_GRNIR2, AVI_GRNIR3)
+  
+  return(output)
+  
+}
+
+###################################################
+## 2- Obtain the first derivative of the spectra ##
+###################################################
+
+## -------------------------------------------------##
+## x = the spectral bands ordered in columns        ##   
+## y = the band wavelength, e.g. seq(475, 875, 10)  ##   
+## -------------------------------------------------##
+
+first.deriv <- function(x, y){
+  refl_2<-t(x) # transpose data
+  refl_2<-data.frame(y, refl_2)
+  N  = length(x)     # N° bands
+  N2 = length(x[,1]) # observations
+  B  = y[2] - y[1]   # band with
+  der<-matrix(,N,N2) # sotored matrix
+  
+  for(i in 1:N){ 
+    for(i2 in 2:N2){
+      t1 <- refl_2[,i2]
+      der[i,i2]<- (((t1[i+1]) - (t1[i])) / B) 
+    }
+  }
+  der<-der[,-1] # delate column 1: only NA
+  der_1<-data.frame(y,der)
+  der_1<-na.omit(der_1)
+}
+
+####################################
+## 3- plot all spectra signatures ##
+####################################
+
+## -------------------------------------------------##
+## x = the spectral bands ordered in columns        ##   
+## y = the band wavelength, e.g. seq(475, 875, 10)  ##   
+## -------------------------------------------------##
+
+plot.spectra <- function(x, y, ...){
+  # set parameters
+  N2 = length(x[,1]) # observations
+  refl_2<-t(x)       # transpose data
+  
+  plot(y, refl_2[,1],type="l", axes=T, ylim=c(min(x), max(x)), ...)
+  for(i in 1:N2-1){  lines(y, refl_2[, i+1])  }
+}
+
+#############################################
+## 4- plot all first derivative signatures ##
+#############################################
+
+## -----------------------------------------------------##
+## x = derivative results from the first.deriv function ##   
+## -----------------------------------------------------##
+
+plot.deriv <- function(x, ...){
+  plot(x[,1], x[,2],type="l", axes=T, ylim=c(min(apply(x[, 2:length(x[1, ])],1,min)), max(apply(x[, 2:length(x[1, ])],1,max))), ...)
+  for(i in 1:(length(x[1,])-1)){  lines(x[,1], x[, i+1])}
+}
+
+plot(der[,1], der[,2], type="l", ylim=c(min(apply(der[, 2:length(der[1, ])],1,min)), max(apply(der[, 2:length(der[1, ])],1,max))))
+for(i in 1:(length(der[1,])-1)){  lines(der[,1], der[, i+1])  }
+
+
+
