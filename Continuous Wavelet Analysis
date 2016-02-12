@@ -10,7 +10,7 @@
 ##################
 ##### RESULTS ####
 ##################
-# the results obtained with the script are:
+# the results obtained with the script are: 
 # WAfit : find the best family using autopls package. Input variable is the observed variable only. e.g. WA_fit(Biomass)
 # r2_all_ref: list of all r2 of the reflectance data performed in WAfit
 # rmse_all_ref: list of all RMSE of the reflectance data performed in WAfit
