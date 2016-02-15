@@ -262,6 +262,28 @@ WA_names <- c("morlet_refl_1", "morlet_refl_2", "morlet_refl_4", "morlet_refl_8"
              "gabor_refl_1", "gabor_refl_2", "gabor_refl_4", "gabor_refl_8", "gabor_refl_16", "gabor_refl_32",
              "gabor_deriv1_1", "gabor_deriv1_2", "gabor_deriv1_4", "gabor_deriv1_8", "gabor_deriv1_16", "gabor_deriv1_32")
 
+WA_values <- list(morlet_refl_1, morlet_refl_2, morlet_refl_4, morlet_refl_8, morlet_refl_16, morlet_refl_32,
+              morlet_deriv1_1, morlet_deriv1_2, morlet_deriv1_4, morlet_deriv1_8, morlet_deriv1_16, morlet_deriv1_32,
+              paul_refl_1, paul_refl_2, paul_refl_4, paul_refl_8, paul_refl_16, paul_refl_32,
+              paul_deriv1_1, paul_deriv1_2, paul_deriv1_4, paul_deriv1_8, paul_deriv1_16, paul_deriv1_32,
+              dog_refl_1, dog_refl_2, dog_refl_4, dog_refl_8, dog_refl_16, dog_refl_32,
+              dog_deriv1_1, dog_deriv1_2, dog_deriv1_4, dog_deriv1_8, dog_deriv1_16, dog_deriv1_32,
+              cauchy_refl_1, cauchy_refl_2, cauchy_refl_4, cauchy_refl_8, cauchy_refl_16, cauchy_refl_32,
+              cauchy_deriv1_1, cauchy_deriv1_2, cauchy_deriv1_4, cauchy_deriv1_8, cauchy_deriv1_16, cauchy_deriv1_32,
+              squiz_refl_1, squiz_refl_2, squiz_refl_4, squiz_refl_8, squiz_refl_16, squiz_refl_32,
+              squiz_deriv1_1, squiz_deriv1_2, squiz_deriv1_4, squiz_deriv1_8, squiz_deriv1_16, squiz_deriv1_32,
+              gabor_refl_1, gabor_refl_2, gabor_refl_4, gabor_refl_8, gabor_refl_16, gabor_refl_32,
+              gabor_deriv1_1, gabor_deriv1_2, gabor_deriv1_4, gabor_deriv1_8, gabor_deriv1_16, gabor_deriv1_32)
+
+# trampose data frames
+for (i in 1:length(WA_names)){ 
+  WA_values[[i]] <- t(WA_values[[i]]) 
+  assign(WA_names[[i]], WA_values[[i]])
+}
+rm(WA_values) # delate the list of data frames
+
+# trampose data frames
+
 
 ###############################
 ### Find the best WA family ###
@@ -277,32 +299,32 @@ library(autopls)
 ###### Morlet
 #
 # scale 1
-morlet_refl_1 <- data.frame(x, t(morlet_refl_1))
+morlet_refl_1 <- data.frame(x, (morlet_refl_1))
 fit<-autopls(x ~.,  data=morlet_refl_1)
 r2_morlet_refl_1 <- R2(fit)
 rmse_morlet_refl_1 <- RMSEP(fit, estimate="CV") 
 # scale 2
-morlet_refl_2 <- data.frame(x, t(morlet_refl_2))
+morlet_refl_2 <- data.frame(x, (morlet_refl_2))
 fit<-autopls(x ~.,  data=morlet_refl_2)
 r2_morlet_refl_2 <- R2(fit)
 rmse_morlet_refl_2 <- RMSEP(fit, estimate="CV") 
 # scale 4
-morlet_refl_4 <- data.frame(x, t(morlet_refl_4))
+morlet_refl_4 <- data.frame(x, (morlet_refl_4))
 fit<-autopls(x ~.,  data=morlet_refl_4)
 r2_morlet_refl_4 <- R2(fit)
 rmse_morlet_refl_4 <- RMSEP(fit, estimate="CV") 
 # scale 8
-morlet_refl_8 <- data.frame(x, t(morlet_refl_8))
+morlet_refl_8 <- data.frame(x, (morlet_refl_8))
 fit<-autopls(x ~.,  data=morlet_refl_8)
 r2_morlet_refl_8 <- R2(fit) 
 rmse_morlet_refl_8 <- RMSEP(fit, estimate="CV") 
 # scale 16
-morlet_refl_16 <- data.frame(x, t(morlet_refl_16))
+morlet_refl_16 <- data.frame(x, (morlet_refl_16))
 fit<-autopls(x ~.,  data=morlet_refl_16)
 r2_morlet_refl_16 <- R2(fit)
 rmse_morlet_refl_16 <- RMSEP(fit, estimate="CV") 
 # scale 32
-morlet_refl_32 <- data.frame(x, t(morlet_refl_32))
+morlet_refl_32 <- data.frame(x, (morlet_refl_32))
 fit<-autopls(x ~.,  data=morlet_refl_32)
 r2_morlet_refl_32 <- R2(fit)
 rmse_morlet_refl_32 <- RMSEP(fit, estimate="CV") 
@@ -310,32 +332,32 @@ rmse_morlet_refl_32 <- RMSEP(fit, estimate="CV")
 ###### paul
 #
 # scale 1
-paul_refl_1 <- data.frame(x, t(paul_refl_1))
+paul_refl_1 <- data.frame(x, (paul_refl_1))
 fit<-autopls(x ~.,  data=paul_refl_1)
 r2_paul_refl_1 <- R2(fit)
 rmse_paul_refl_1 <- RMSEP(fit, estimate="CV") 
 # scale 2
-paul_refl_2 <- data.frame(x, t(paul_refl_2))
+paul_refl_2 <- data.frame(x, (paul_refl_2))
 fit<-autopls(x ~.,  data=paul_refl_2)
 r2_paul_refl_2 <- R2(fit)
 rmse_paul_refl_2 <- RMSEP(fit, estimate="CV") 
 # scale 4
-paul_refl_4 <- data.frame(x, t(paul_refl_4))
+paul_refl_4 <- data.frame(x, (paul_refl_4))
 fit<-autopls(x ~.,  data=paul_refl_4)
 r2_paul_refl_4 <- R2(fit)
 rmse_paul_refl_4 <- RMSEP(fit, estimate="CV") 
 # scale 8
-paul_refl_8 <- data.frame(x, t(paul_refl_8))
+paul_refl_8 <- data.frame(x, (paul_refl_8))
 fit<-autopls(x ~.,  data=paul_refl_8)
 r2_paul_refl_8 <- R2(fit)
 rmse_paul_refl_8 <- RMSEP(fit, estimate="CV") 
 # scale 16
-paul_refl_16 <- data.frame(x, t(paul_refl_16))
+paul_refl_16 <- data.frame(x, (paul_refl_16))
 fit<-autopls(x ~.,  data=paul_refl_16)
 r2_paul_refl_16 <- R2(fit)
 rmse_paul_refl_16 <- RMSEP(fit, estimate="CV") 
 # scale 32
-paul_refl_32 <- data.frame(x, t(paul_refl_32))
+paul_refl_32 <- data.frame(x, (paul_refl_32))
 fit<-autopls(x ~.,  data=paul_refl_32)
 r2_paul_refl_32 <- R2(fit)
 rmse_paul_refl_32 <- RMSEP(fit, estimate="CV") 
@@ -343,32 +365,32 @@ rmse_paul_refl_32 <- RMSEP(fit, estimate="CV")
 ###### dog
 #
 # scale 1
-dog_refl_1 <- data.frame(x, t(dog_refl_1))
+dog_refl_1 <- data.frame(x, (dog_refl_1))
 fit<-autopls(x ~.,  data=dog_refl_1)
 r2_dog_refl_1 <- R2(fit)
 rmse_dog_refl_1 <- RMSEP(fit, estimate="CV") 
 # scale 2
-dog_refl_2 <- data.frame(x, t(dog_refl_2))
+dog_refl_2 <- data.frame(x, (dog_refl_2))
 fit<-autopls(x ~.,  data=dog_refl_2)
 r2_dog_refl_2 <- R2(fit)
 rmse_dog_refl_2 <- RMSEP(fit, estimate="CV") 
 # scale 4
-dog_refl_4 <- data.frame(x, t(dog_refl_4))
+dog_refl_4 <- data.frame(x, (dog_refl_4))
 fit<-autopls(x ~.,  data=dog_refl_4)
 r2_dog_refl_4 <- R2(fit)
 rmse_dog_refl_4 <- RMSEP(fit, estimate="CV") 
 # scale 8
-dog_refl_8 <- data.frame(x, t(dog_refl_8))
+dog_refl_8 <- data.frame(x, (dog_refl_8))
 fit<-autopls(x ~.,  data=dog_refl_8)
 r2_dog_refl_8 <- R2(fit)
 rmse_dog_refl_8 <- RMSEP(fit, estimate="CV") 
 # scale 16
-dog_refl_16 <- data.frame(x, t(dog_refl_16))
+dog_refl_16 <- data.frame(x, (dog_refl_16))
 fit<-autopls(x ~.,  data=dog_refl_16)
 r2_dog_refl_16 <- R2(fit)
 rmse_dog_refl_16 <- RMSEP(fit, estimate="CV") 
 # scale 32
-dog_refl_32 <- data.frame(x, t(dog_refl_32))
+dog_refl_32 <- data.frame(x, (dog_refl_32))
 fit<-autopls(x ~.,  data=dog_refl_32)
 r2_dog_refl_32 <- R2(fit)
 rmse_dog_refl_32 <- RMSEP(fit, estimate="CV") 
@@ -376,32 +398,32 @@ rmse_dog_refl_32 <- RMSEP(fit, estimate="CV")
 ###### cauchy
 #
 # scale 1
-cauchy_refl_1 <- data.frame(x, t(cauchy_refl_1))
+cauchy_refl_1 <- data.frame(x, (cauchy_refl_1))
 fit<-autopls(x ~.,  data=cauchy_refl_1)
 r2_cauchy_refl_1 <- R2(fit)
 rmse_cauchy_refl_1 <- RMSEP(fit, estimate="CV") 
 # scale 2
-cauchy_refl_2 <- data.frame(x, t(cauchy_refl_2))
+cauchy_refl_2 <- data.frame(x, (cauchy_refl_2))
 fit<-autopls(x ~.,  data=cauchy_refl_2)
 r2_cauchy_refl_2 <- R2(fit)
 rmse_cauchy_refl_2 <- RMSEP(fit, estimate="CV") 
 # scale 4
-cauchy_refl_4 <- data.frame(x, t(cauchy_refl_4))
+cauchy_refl_4 <- data.frame(x, (cauchy_refl_4))
 fit<-autopls(x ~.,  data=cauchy_refl_4)
 r2_cauchy_refl_4 <- R2(fit)
 rmse_cauchy_refl_4 <- RMSEP(fit, estimate="CV") 
 # scale 8
-cauchy_refl_8 <- data.frame(x, t(cauchy_refl_8))
+cauchy_refl_8 <- data.frame(x, (cauchy_refl_8))
 fit<-autopls(x ~.,  data=cauchy_refl_8)
 r2_cauchy_refl_8 <- R2(fit)
 rmse_cauchy_refl_8 <- RMSEP(fit, estimate="CV") 
 # scale 16
-cauchy_refl_16 <- data.frame(x, t(cauchy_refl_16))
+cauchy_refl_16 <- data.frame(x, (cauchy_refl_16))
 fit<-autopls(x ~.,  data=cauchy_refl_16)
 r2_cauchy_refl_16 <- R2(fit)
 rmse_cauchy_refl_16 <- RMSEP(fit, estimate="CV") 
 # scale 32
-cauchy_refl_32 <- data.frame(x, t(cauchy_refl_32))
+cauchy_refl_32 <- data.frame(x, (cauchy_refl_32))
 fit<-autopls(x ~.,  data=cauchy_refl_32)
 r2_cauchy_refl_32 <- R2(fit)
 rmse_cauchy_refl_32 <- RMSEP(fit, estimate="CV") 
@@ -409,32 +431,32 @@ rmse_cauchy_refl_32 <- RMSEP(fit, estimate="CV")
 ###### squiz
 #
 # scale 1
-squiz_refl_1 <- data.frame(x, t(squiz_refl_1))
+squiz_refl_1 <- data.frame(x, (squiz_refl_1))
 fit<-autopls(x ~.,  data=squiz_refl_1)
 r2_squiz_refl_1 <- R2(fit)
 rmse_squiz_refl_1 <- RMSEP(fit, estimate="CV") 
 # scale 2
-squiz_refl_2 <- data.frame(x, t(squiz_refl_2))
+squiz_refl_2 <- data.frame(x, (squiz_refl_2))
 fit<-autopls(x ~.,  data=squiz_refl_2)
 r2_squiz_refl_2 <- R2(fit)
 rmse_squiz_refl_2 <- RMSEP(fit, estimate="CV") 
 # scale 4
-squiz_refl_4 <- data.frame(x, t(squiz_refl_4))
+squiz_refl_4 <- data.frame(x, (squiz_refl_4))
 fit<-autopls(x ~.,  data=squiz_refl_4)
 r2_squiz_refl_4 <- R2(fit)
 rmse_squiz_refl_4 <- RMSEP(fit, estimate="CV") 
 # scale 8
-squiz_refl_8 <- data.frame(x, t(squiz_refl_8))
+squiz_refl_8 <- data.frame(x, (squiz_refl_8))
 fit<-autopls(x ~.,  data=squiz_refl_8)
 r2_squiz_refl_8 <- R2(fit)
 rmse_squiz_refl_8 <- RMSEP(fit, estimate="CV") 
 # scale 16
-squiz_refl_16 <- data.frame(x, t(squiz_refl_16))
+squiz_refl_16 <- data.frame(x, (squiz_refl_16))
 fit<-autopls(x ~.,  data=squiz_refl_16)
 r2_squiz_refl_16 <- R2(fit)
 rmse_squiz_refl_16 <- RMSEP(fit, estimate="CV") 
 # scale 32
-squiz_refl_32 <- data.frame(x, t(squiz_refl_32))
+squiz_refl_32 <- data.frame(x, (squiz_refl_32))
 fit<-autopls(x ~.,  data=squiz_refl_32)
 r2_squiz_refl_32 <- R2(fit)
 rmse_squiz_refl_32 <- RMSEP(fit, estimate="CV") 
@@ -442,32 +464,32 @@ rmse_squiz_refl_32 <- RMSEP(fit, estimate="CV")
 ###### gabor
 #
 # scale 1
-gabor_refl_1 <- data.frame(x, t(gabor_refl_1))
+gabor_refl_1 <- data.frame(x, (gabor_refl_1))
 fit<-autopls(x ~.,  data=gabor_refl_1)
 r2_gabor_refl_1 <- R2(fit)
 rmse_gabor_refl_1 <- RMSEP(fit, estimate="CV") 
 # scale 2
-gabor_refl_2 <- data.frame(x, t(gabor_refl_2))
+gabor_refl_2 <- data.frame(x, (gabor_refl_2))
 fit<-autopls(x ~.,  data=gabor_refl_2)
 r2_gabor_refl_2 <- R2(fit)
 rmse_gabor_refl_2 <- RMSEP(fit, estimate="CV") 
 # scale 4
-gabor_refl_4 <- data.frame(x, t(gabor_refl_4))
+gabor_refl_4 <- data.frame(x, (gabor_refl_4))
 fit<-autopls(x ~.,  data=gabor_refl_4)
 r2_gabor_refl_4 <- R2(fit)
 rmse_gabor_refl_4 <- RMSEP(fit, estimate="CV") 
 # scale 8
-gabor_refl_8 <- data.frame(x, t(gabor_refl_8))
+gabor_refl_8 <- data.frame(x, (gabor_refl_8))
 fit<-autopls(x ~.,  data=gabor_refl_8)
 r2_gabor_refl_8 <- R2(fit)
 rmse_gabor_refl_8 <- RMSEP(fit, estimate="CV") 
 # scale 16
-gabor_refl_16 <- data.frame(x, t(gabor_refl_16))
+gabor_refl_16 <- data.frame(x, (gabor_refl_16))
 fit<-autopls(x ~.,  data=gabor_refl_16)
 r2_gabor_refl_16 <- R2(fit)
 rmse_gabor_refl_16 <- RMSEP(fit, estimate="CV") 
 # scale 32
-gabor_refl_32 <- data.frame(x, t(gabor_refl_32))
+gabor_refl_32 <- data.frame(x, (gabor_refl_32))
 fit<-autopls(x ~.,  data=gabor_refl_32)
 r2_gabor_refl_32 <- R2(fit)
 rmse_gabor_refl_32 <- RMSEP(fit, estimate="CV") 
@@ -478,37 +500,37 @@ rmse_gabor_refl_32 <- RMSEP(fit, estimate="CV")
 ###### Morlet
 #
 # scale 1
-morlet_deriv1_1 <- data.frame(x[1:length(x) - 1], t(morlet_deriv1_1))
+morlet_deriv1_1 <- data.frame(x[1:length(x) - 1], (morlet_deriv1_1))
 colnames(morlet_deriv1_1)[1] <-c("x") 
 fit<-autopls(x ~.,  data=morlet_deriv1_1)
 r2_morlet_deriv1_1 <- R2(fit)
 rmse_morlet_deriv1_1 <- RMSEP(fit, estimate="CV") 
 # scale 2
-morlet_deriv1_2 <- data.frame(x[1:length(x) - 1], t(morlet_deriv1_2))
+morlet_deriv1_2 <- data.frame(x[1:length(x) - 1], (morlet_deriv1_2))
 colnames(morlet_deriv1_2)[1] <-c("x") 
 fit<-autopls(x ~.,  data=morlet_deriv1_2)
 r2_morlet_deriv1_2 <- R2(fit)
 rmse_morlet_deriv1_2 <- RMSEP(fit, estimate="CV") 
 # scale 4
-morlet_deriv1_4 <- data.frame(x[1:length(x) - 1], t(morlet_deriv1_4))
+morlet_deriv1_4 <- data.frame(x[1:length(x) - 1], (morlet_deriv1_4))
 colnames(morlet_deriv1_4)[1] <-c("x") 
 fit<-autopls(x ~.,  data=morlet_deriv1_4)
 r2_morlet_deriv1_4 <- R2(fit)
 rmse_morlet_deriv1_4 <- RMSEP(fit, estimate="CV") 
 # scale 8
-morlet_deriv1_8 <- data.frame(x[1:length(x) - 1], t(morlet_deriv1_8))
+morlet_deriv1_8 <- data.frame(x[1:length(x) - 1], (morlet_deriv1_8))
 colnames(morlet_deriv1_8)[1] <-c("x") 
 fit<-autopls(x ~.,  data=morlet_deriv1_8)
 r2_morlet_deriv1_8 <- R2(fit)
 rmse_morlet_deriv1_8 <- RMSEP(fit, estimate="CV") 
 # scale 16
-morlet_deriv1_16 <- data.frame(x[1:length(x) - 1], t(morlet_deriv1_16))
+morlet_deriv1_16 <- data.frame(x[1:length(x) - 1], (morlet_deriv1_16))
 colnames(morlet_deriv1_16)[1] <-c("x") 
 fit<-autopls(x ~.,  data=morlet_deriv1_16)
 r2_morlet_deriv1_16 <- R2(fit)
 rmse_morlet_deriv1_16 <- RMSEP(fit, estimate="CV") 
 # scale 32
-morlet_deriv1_32 <- data.frame(x[1:length(x) - 1], t(morlet_deriv1_32))
+morlet_deriv1_32 <- data.frame(x[1:length(x) - 1], (morlet_deriv1_32))
 colnames(morlet_deriv1_32)[1] <-c("x") 
 fit<-autopls(x ~.,  data=morlet_deriv1_32)
 r2_morlet_deriv1_32 <- R2(fit)
@@ -517,33 +539,38 @@ rmse_morlet_deriv1_32 <- RMSEP(fit, estimate="CV")
 ###### paul
 #
 # scale 1
-paul_deriv1_1 <- data.frame(x[1:length(x) - 1], t(paul_deriv1_1))
+paul_deriv1_1 <- data.frame(x[1:length(x) - 1], (paul_deriv1_1))
 colnames(paul_deriv1_1)[1] <-c("x") 
 fit<-autopls(x ~.,  data=paul_deriv1_1)
 r2_paul_deriv1_1 <- R2(fit)
 rmse_paul_deriv1_1 <- RMSEP(fit, estimate="CV") 
 # scale 2
-paul_deriv1_2 <- data.frame(x[1:length(x) - 1], t(paul_deriv1_2))
+paul_deriv1_2 <- data.frame(x[1:length(x) - 1], (paul_deriv1_2))
+colnames(paul_deriv1_2)[1] <-c("x") 
 fit<-autopls(x ~.,  data=paul_deriv1_2)
 r2_paul_deriv1_2 <- R2(fit)
 rmse_paul_deriv1_2 <- RMSEP(fit, estimate="CV") 
 # scale 4
-paul_deriv1_4 <- data.frame(x[1:length(x) - 1], t(paul_deriv1_4))
+paul_deriv1_4 <- data.frame(x[1:length(x) - 1], (paul_deriv1_4))
+colnames(paul_deriv1_4)[1] <-c("x") 
 fit<-autopls(x ~.,  data=paul_deriv1_4)
 r2_paul_deriv1_4 <- R2(fit)
 rmse_paul_deriv1_4 <- RMSEP(fit, estimate="CV") 
 # scale 8
-paul_deriv1_8 <- data.frame(x[1:length(x) - 1], t(paul_deriv1_8))
+paul_deriv1_8 <- data.frame(x[1:length(x) - 1], (paul_deriv1_8))
+colnames(paul_deriv1_8)[1] <-c("x") 
 fit<-autopls(x ~.,  data=paul_deriv1_8)
 r2_paul_deriv1_8 <- R2(fit)
 rmse_paul_deriv1_8 <- RMSEP(fit, estimate="CV") 
 # scale 16
-paul_deriv1_16 <- data.frame(x[1:length(x) - 1], t(paul_deriv1_16))
+paul_deriv1_16 <- data.frame(x[1:length(x) - 1], (paul_deriv1_16))
+colnames(paul_deriv1_16)[1] <-c("x") 
 fit<-autopls(x ~.,  data=paul_deriv1_16)
 r2_paul_deriv1_16 <- R2(fit)
 rmse_paul_deriv1_16 <- RMSEP(fit, estimate="CV") 
 # scale 32
-paul_deriv1_32 <- data.frame(x[1:length(x) - 1], t(paul_deriv1_32))
+paul_deriv1_32 <- data.frame(x[1:length(x) - 1], (paul_deriv1_32))
+colnames(paul_deriv1_32)[1] <-c("x") 
 fit<-autopls(x ~.,  data=paul_deriv1_32)
 r2_paul_deriv1_32 <- R2(fit)
 rmse_paul_deriv1_32 <- RMSEP(fit, estimate="CV") 
@@ -551,32 +578,38 @@ rmse_paul_deriv1_32 <- RMSEP(fit, estimate="CV")
 ###### dog
 #
 # scale 1
-dog_deriv1_1 <- data.frame(x[1:length(x) - 1], t(dog_deriv1_1))
+dog_deriv1_1 <- data.frame(x[1:length(x) - 1], (dog_deriv1_1))
+colnames(dog_deriv1_1)[1] <-c("x") 
 fit<-autopls(x ~.,  data=dog_deriv1_1)
 r2_dog_deriv1_1 <- R2(fit)
 rmse_dog_deriv1_1 <- RMSEP(fit, estimate="CV") 
 # scale 2
-dog_deriv1_2 <- data.frame(x[1:length(x) - 1], t(dog_deriv1_2))
+dog_deriv1_2 <- data.frame(x[1:length(x) - 1], (dog_deriv1_2))
+colnames(dog_deriv1_2)[1] <-c("x")
 fit<-autopls(x ~.,  data=dog_deriv1_2)
 r2_dog_deriv1_2 <- R2(fit)
 rmse_dog_deriv1_2 <- RMSEP(fit, estimate="CV") 
 # scale 4
-dog_deriv1_4 <- data.frame(x[1:length(x) - 1], t(dog_deriv1_4))
+dog_deriv1_4 <- data.frame(x[1:length(x) - 1], (dog_deriv1_4))
+colnames(dog_deriv1_4)[1] <-c("x")
 fit<-autopls(x ~.,  data=dog_deriv1_4)
 r2_dog_deriv1_4 <- R2(fit)
 rmse_dog_deriv1_4 <- RMSEP(fit, estimate="CV") 
 # scale 8
-dog_deriv1_8 <- data.frame(x[1:length(x) - 1], t(dog_deriv1_8))
+dog_deriv1_8 <- data.frame(x[1:length(x) - 1], (dog_deriv1_8))
+colnames(dog_deriv1_8)[1] <-c("x")
 fit<-autopls(x ~.,  data=dog_deriv1_8)
 r2_dog_deriv1_8 <- R2(fit)
 rmse_dog_deriv1_8 <- RMSEP(fit, estimate="CV") 
 # scale 16
-dog_deriv1_16 <- data.frame(x[1:length(x) - 1], t(dog_deriv1_16))
+dog_deriv1_16 <- data.frame(x[1:length(x) - 1], (dog_deriv1_16))
+colnames(dog_deriv1_16)[1] <-c("x")
 fit<-autopls(x ~.,  data=dog_deriv1_16)
 r2_dog_deriv1_16 <- R2(fit)
 rmse_dog_deriv1_16 <- RMSEP(fit, estimate="CV") 
 # scale 32
-dog_deriv1_32 <- data.frame(x[1:length(x) - 1], t(dog_deriv1_32))
+dog_deriv1_32 <- data.frame(x[1:length(x) - 1], (dog_deriv1_32))
+colnames(dog_deriv1_32)[1] <-c("x")
 fit<-autopls(x ~.,  data=dog_deriv1_32)
 r2_dog_deriv1_32 <- R2(fit)
 rmse_dog_deriv1_32 <- RMSEP(fit, estimate="CV") 
@@ -584,32 +617,38 @@ rmse_dog_deriv1_32 <- RMSEP(fit, estimate="CV")
 ###### cauchy
 #
 # scale 1
-cauchy_deriv1_1 <- data.frame(x[1:length(x) - 1], t(cauchy_deriv1_1))
+cauchy_deriv1_1 <- data.frame(x[1:length(x) - 1], (cauchy_deriv1_1))
+colnames(cauchy_deriv1_1)[1] <-c("x")
 fit<-autopls(x ~.,  data=cauchy_deriv1_1)
 r2_cauchy_deriv1_1 <- R2(fit)
 rmse_cauchy_deriv1_1 <- RMSEP(fit, estimate="CV") 
 # scale 2
-cauchy_deriv1_2 <- data.frame(x[1:length(x) - 1], t(cauchy_deriv1_2))
+cauchy_deriv1_2 <- data.frame(x[1:length(x) - 1], (cauchy_deriv1_2))
+colnames(cauchy_deriv1_2)[1] <-c("x")
 fit<-autopls(x ~.,  data=cauchy_deriv1_2)
 r2_cauchy_deriv1_2 <- R2(fit)
 rmse_cauchy_deriv1_2 <- RMSEP(fit, estimate="CV") 
 # scale 4
-cauchy_deriv1_4 <- data.frame(x[1:length(x) - 1], t(cauchy_deriv1_4))
+cauchy_deriv1_4 <- data.frame(x[1:length(x) - 1], (cauchy_deriv1_4))
+colnames(cauchy_deriv1_4)[1] <-c("x")
 fit<-autopls(x ~.,  data=cauchy_deriv1_4)
 r2_cauchy_deriv1_4 <- R2(fit)
 rmse_cauchy_deriv1_4 <- RMSEP(fit, estimate="CV") 
 # scale 8
-cauchy_deriv1_8 <- data.frame(x[1:length(x) - 1], t(cauchy_deriv1_8))
+cauchy_deriv1_8 <- data.frame(x[1:length(x) - 1], (cauchy_deriv1_8))
+colnames(cauchy_deriv1_8)[1] <-c("x")
 fit<-autopls(x ~.,  data=cauchy_deriv1_8)
 r2_cauchy_deriv1_8 <- R2(fit)
 rmse_cauchy_deriv1_8 <- RMSEP(fit, estimate="CV") 
 # scale 16
-cauchy_deriv1_16 <- data.frame(x[1:length(x) - 1], t(cauchy_deriv1_16))
+cauchy_deriv1_16 <- data.frame(x[1:length(x) - 1], (cauchy_deriv1_16))
+colnames(cauchy_deriv1_16)[1] <-c("x")
 fit<-autopls(x ~.,  data=cauchy_deriv1_16)
 r2_cauchy_deriv1_16 <- R2(fit)
 rmse_cauchy_deriv1_16 <- RMSEP(fit, estimate="CV") 
 # scale 32
-cauchy_deriv1_32 <- data.frame(x[1:length(x) - 1], t(cauchy_deriv1_32))
+cauchy_deriv1_32 <- data.frame(x[1:length(x) - 1], (cauchy_deriv1_32))
+colnames(cauchy_deriv1_32)[1] <-c("x")
 fit<-autopls(x ~.,  data=cauchy_deriv1_32)
 r2_cauchy_deriv1_32 <- R2(fit)
 rmse_cauchy_deriv1_32 <- RMSEP(fit, estimate="CV") 
@@ -617,32 +656,38 @@ rmse_cauchy_deriv1_32 <- RMSEP(fit, estimate="CV")
 ###### squiz
 #
 # scale 1
-squiz_deriv1_1 <- data.frame(x[1:length(x) - 1], t(squiz_deriv1_1))
+squiz_deriv1_1 <- data.frame(x[1:length(x) - 1], (squiz_deriv1_1))
+colnames(squiz_deriv1_1)[1] <-c("x")
 fit<-autopls(x ~.,  data=squiz_deriv1_1)
 r2_squiz_deriv1_1 <- R2(fit)
 rmse_squiz_deriv1_1 <- RMSEP(fit, estimate="CV") 
 # scale 2
-squiz_deriv1_2 <- data.frame(x[1:length(x) - 1], t(squiz_deriv1_2))
+squiz_deriv1_2 <- data.frame(x[1:length(x) - 1], (squiz_deriv1_2))
+colnames(squiz_deriv1_2)[1] <-c("x")
 fit<-autopls(x ~.,  data=squiz_deriv1_2)
 r2_squiz_deriv1_2 <- R2(fit)
 rmse_squiz_deriv1_2 <- RMSEP(fit, estimate="CV") 
 # scale 4
-squiz_deriv1_4 <- data.frame(x[1:length(x) - 1], t(squiz_deriv1_4))
+squiz_deriv1_4 <- data.frame(x[1:length(x) - 1], (squiz_deriv1_4))
+colnames(squiz_deriv1_4)[1] <-c("x")
 fit<-autopls(x ~.,  data=squiz_deriv1_4)
 r2_squiz_deriv1_4 <- R2(fit)
 rmse_squiz_deriv1_4 <- RMSEP(fit, estimate="CV") 
 # scale 8
-squiz_deriv1_8 <- data.frame(x[1:length(x) - 1], t(squiz_deriv1_8))
+squiz_deriv1_8 <- data.frame(x[1:length(x) - 1], (squiz_deriv1_8))
+colnames(squiz_deriv1_8)[1] <-c("x")
 fit<-autopls(x ~.,  data=squiz_deriv1_8)
 r2_squiz_deriv1_8 <- R2(fit)
 rmse_squiz_deriv1_8 <- RMSEP(fit, estimate="CV") 
 # scale 16
-squiz_deriv1_16 <- data.frame(x[1:length(x) - 1], t(squiz_deriv1_16))
+squiz_deriv1_16 <- data.frame(x[1:length(x) - 1], (squiz_deriv1_16))
+colnames(squiz_deriv1_16)[1] <-c("x")
 fit<-autopls(x ~.,  data=squiz_deriv1_16)
 r2_squiz_deriv1_16 <- R2(fit)
 rmse_squiz_deriv1_16 <- RMSEP(fit, estimate="CV") 
 # scale 32
-squiz_deriv1_32 <- data.frame(x[1:length(x) - 1], t(squiz_deriv1_32))
+squiz_deriv1_32 <- data.frame(x[1:length(x) - 1], (squiz_deriv1_32))
+colnames(squiz_deriv1_32)[1] <-c("x")
 fit<-autopls(x ~.,  data=squiz_deriv1_32)
 r2_squiz_deriv1_32 <- R2(fit)
 rmse_squiz_deriv1_32 <- RMSEP(fit, estimate="CV") 
@@ -650,32 +695,38 @@ rmse_squiz_deriv1_32 <- RMSEP(fit, estimate="CV")
 ###### gabor
 #
 # scale 1
-gabor_deriv1_1 <- data.frame(x[1:length(x) - 1], t(gabor_deriv1_1))
+gabor_deriv1_1 <- data.frame(x[1:length(x) - 1], (gabor_deriv1_1))
+colnames(gabor_deriv1_1)[1] <-c("x")
 fit<-autopls(x ~.,  data=gabor_deriv1_1)
 r2_gabor_deriv1_1 <- R2(fit)
 rmse_gabor_deriv1_1 <- RMSEP(fit, estimate="CV") 
 # scale 2
-gabor_deriv1_2 <- data.frame(x[1:length(x) - 1], t(gabor_deriv1_2))
+gabor_deriv1_2 <- data.frame(x[1:length(x) - 1], (gabor_deriv1_2))
+colnames(gabor_deriv1_2)[1] <-c("x")
 fit<-autopls(x ~.,  data=gabor_deriv1_2)
 r2_gabor_deriv1_2 <- R2(fit)
 rmse_gabor_deriv1_2 <- RMSEP(fit, estimate="CV") 
 # scale 4
-gabor_deriv1_4 <- data.frame(x[1:length(x) - 1], t(gabor_deriv1_4))
+gabor_deriv1_4 <- data.frame(x[1:length(x) - 1], (gabor_deriv1_4))
+colnames(gabor_deriv1_4)[1] <-c("x")
 fit<-autopls(x ~.,  data=gabor_deriv1_4)
 r2_gabor_deriv1_4 <- R2(fit)
 rmse_gabor_deriv1_4 <- RMSEP(fit, estimate="CV") 
 # scale 8
-gabor_deriv1_8 <- data.frame(x[1:length(x) - 1], t(gabor_deriv1_8))
+gabor_deriv1_8 <- data.frame(x[1:length(x) - 1], (gabor_deriv1_8))
+colnames(gabor_deriv1_8)[1] <-c("x")
 fit<-autopls(x ~.,  data=gabor_deriv1_8)
 r2_gabor_deriv1_8 <- R2(fit)
 rmse_gabor_deriv1_8 <- RMSEP(fit, estimate="CV") 
 # scale 16
-gabor_deriv1_16 <- data.frame(x[1:length(x) - 1], t(gabor_deriv1_16))
+gabor_deriv1_16 <- data.frame(x[1:length(x) - 1], (gabor_deriv1_16))
+colnames(gabor_deriv1_16)[1] <-c("x")
 fit<-autopls(x ~.,  data=gabor_deriv1_16)
 r2_gabor_deriv1_16 <- R2(fit)
 rmse_gabor_deriv1_16 <- RMSEP(fit, estimate="CV") 
 # scale 32
-gabor_deriv1_32 <- data.frame(x[1:length(x) - 1], t(gabor_deriv1_32))
+gabor_deriv1_32 <- data.frame(x[1:length(x) - 1], (gabor_deriv1_32))
+colnames(gabor_deriv1_32)[1] <-c("x")
 fit<-autopls(x ~.,  data=gabor_deriv1_32)
 r2_gabor_deriv1_32 <- R2(fit)
 rmse_gabor_deriv1_32 <- RMSEP(fit, estimate="CV") 
@@ -696,6 +747,8 @@ names(r2_all_ref) <- c("morlet_1", "morlet_2", "morlet_4", "morlet_8", "morlet_1
                        "cauchy_1", "cauchy_2", "cauchy_4", "cauchy_8", "cauchy_16", "cauchy_32",
                        "squiz_1", "squiz_2", "squiz_4", "squiz_8", "squiz_16", "squiz_32",
                        "gabor_1", "gabor_2", "gabor_4", "gabor_8", "gabor_16", "gabor_32")
+abs(r2_all_ref)
+
 # RMSE
 rmse_all_ref <- data.frame(rmse_morlet_refl_1$val[1], rmse_morlet_refl_2$val[1], rmse_morlet_refl_4$val[1], rmse_morlet_refl_8$val[1], rmse_morlet_refl_16$val[1], rmse_morlet_refl_32$val[1],
                          rmse_paul_refl_1$val[1], rmse_paul_refl_2$val[1], rmse_paul_refl_4$val[1], rmse_paul_refl_8$val[1], rmse_paul_refl_16$val[1], rmse_paul_refl_32$val[1],
@@ -703,7 +756,7 @@ rmse_all_ref <- data.frame(rmse_morlet_refl_1$val[1], rmse_morlet_refl_2$val[1],
                          rmse_cauchy_refl_1$val[1], rmse_cauchy_refl_2$val[1], rmse_cauchy_refl_4$val[1], rmse_cauchy_refl_8$val[1], rmse_cauchy_refl_16$val[1], rmse_cauchy_refl_32$val[1],
                          rmse_squiz_refl_1$val[1], rmse_squiz_refl_2$val[1], rmse_squiz_refl_4$val[1], rmse_squiz_refl_8$val[1], rmse_squiz_refl_16$val[1], rmse_squiz_refl_32$val[1],
                          rmse_gabor_refl_1$val[1], rmse_gabor_refl_2$val[1], rmse_gabor_refl_4$val[1], rmse_gabor_refl_8$val[1], rmse_gabor_refl_16$val[1], rmse_gabor_refl_32$val[1])
-names(rmse_all_ref) <- names(r2_all_ref)
+names(rmse_all_ref) <- names(r2_all_ref) ; abs(rmse_all_ref)
 
 # derivative imput
 # r2
@@ -713,7 +766,7 @@ r2_all_deriv <- data.frame(r2_morlet_deriv1_1$val[1], r2_morlet_deriv1_2$val[1],
                          r2_cauchy_deriv1_1$val[1], r2_cauchy_deriv1_2$val[1], r2_cauchy_deriv1_4$val[1], r2_cauchy_deriv1_8$val[1], r2_cauchy_deriv1_16$val[1], r2_cauchy_deriv1_32$val[1],
                          r2_squiz_deriv1_1$val[1], r2_squiz_deriv1_2$val[1], r2_squiz_deriv1_4$val[1], r2_squiz_deriv1_8$val[1], r2_squiz_deriv1_16$val[1], r2_squiz_deriv1_32$val[1],
                          r2_gabor_deriv1_1$val[1], r2_gabor_deriv1_2$val[1], r2_gabor_deriv1_4$val[1], r2_gabor_deriv1_8$val[1], r2_gabor_deriv1_16$val[1], r2_gabor_deriv1_32$val[1])
-names(r2_all_deriv) <- names(r2_all_ref) 
+names(r2_all_deriv) <- names(r2_all_ref) ; abs(r2_all_deriv)
 
 # RMSE
 rmse_all_deriv <- data.frame(rmse_morlet_deriv1_1$val[1], rmse_morlet_deriv1_2$val[1], rmse_morlet_deriv1_4$val[1], rmse_morlet_deriv1_8$val[1], rmse_morlet_deriv1_16$val[1], rmse_morlet_deriv1_32$val[1],
@@ -722,7 +775,7 @@ rmse_all_deriv <- data.frame(rmse_morlet_deriv1_1$val[1], rmse_morlet_deriv1_2$v
                            rmse_cauchy_deriv1_1$val[1], rmse_cauchy_deriv1_2$val[1], rmse_cauchy_deriv1_4$val[1], rmse_cauchy_deriv1_8$val[1], rmse_cauchy_deriv1_16$val[1], rmse_cauchy_deriv1_32$val[1],
                            rmse_squiz_deriv1_1$val[1], rmse_squiz_deriv1_2$val[1], rmse_squiz_deriv1_4$val[1], rmse_squiz_deriv1_8$val[1], rmse_squiz_deriv1_16$val[1], rmse_squiz_deriv1_32$val[1],
                            rmse_gabor_deriv1_1$val[1], rmse_gabor_deriv1_2$val[1], rmse_gabor_deriv1_4$val[1], rmse_gabor_deriv1_8$val[1], rmse_gabor_deriv1_16$val[1], rmse_gabor_deriv1_32$val[1])
-names(rmse_all_deriv) <- names(r2_all_ref) 
+names(rmse_all_deriv) <- names(r2_all_ref) ; abs(rmse_all_deriv)
 
 save.image("WAVELETS.RData")
 }
@@ -736,21 +789,8 @@ save.image("WAVELETS.RData")
 # r = rmse_all_deriv
 
 bestWA <- function(x, y, z, r) {
-## refled input
-#r2
-which.max(x)
-max(x)
-#rmse
-which.min(y)
-min(y)
-## derivative input
-#r2
-which.max(z)
-max(z)
-#rmse
-which.min(r)
-min(r)
-
+output <- c(which.max(x), max(x), which.min(y), min(y),  which.max(y), max(y),  which.min(r), min(r))
+return(output)
 }
 
 plotWA <- function(x, y){
