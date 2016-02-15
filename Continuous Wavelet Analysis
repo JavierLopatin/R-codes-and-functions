@@ -277,10 +277,10 @@ WA_values <- list(morlet_refl_1, morlet_refl_2, morlet_refl_4, morlet_refl_8, mo
 
 # trampose data frames
 for (i in 1:length(WA_names)){ 
-  WA_values[[i]] <- t(WA_values[[i]]) 
-  assign(WA_names[[i]], WA_values[[i]])
+  WA_values[[i]] <- r ;   r <- t(r) 
+  assign(WA_names[[i]], r)
 }
-rm(WA_values) # delate the list of data frames
+rm(c(WA_values, r)) # delate the list of data frames
 
 # trampose data frames
 
