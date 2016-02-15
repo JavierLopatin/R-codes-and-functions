@@ -280,7 +280,7 @@ for (i in 1:length(WA_names)){
   r <- WA_values[[i]];   r <- as.data.frame(t(r)) 
   assign(WA_names[[i]], r)
 }
-rm(WA_values, r) # delate the list of data frames
+rm(r) # delate the list of data frames
 
 
 ###############################
