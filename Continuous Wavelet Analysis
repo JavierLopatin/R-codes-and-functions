@@ -791,7 +791,7 @@ output <- c(which.max(x), max(x), which.min(y), min(y),  which.max(y), max(y),  
 return(output)
 }
 
-plotWA <- function(x, y){
+plotWA <- function(x, y, z, r,...){
 ## Plot result per family
 # x = r2_all_ref
 # y = rmse_all_ref
@@ -799,10 +799,10 @@ plotWA <- function(x, y){
 # r = rmse_all_deriv
 
 Scale <- c(1,2,4,8,16,32)
-par(mfrow=c(2,2),lend = 1, mai = c(0.8, 0.8, 0.4, 0.2))
+par(mfrow=c(2,2),lend = 1, mai = c(1, 1, 0.4, 0.4))
 #r2
 # reflive input
-plot (Scale, x[,1:6], type="o", ylab=expression(r^2), ylim=c(0.4,1), pch=1, lwd=1.5, main="", las=1, cex=1.1, cex.lab=1.1, cex.axis=1.1)
+plot (Scale, x[,1:6], type="o", ylab=expression(r^2), ylim=c(0,1), pch=1, lwd=1.5, main="", las=1, cex=1.1, cex.lab=1.1, cex.axis=1.1)
 lines(Scale, x[,7:12], type="o", pch=2, lwd=1.5, lty=2)
 lines(Scale, x[,13:18], type="o", pch=3, lwd=1.5, lty=3)
 lines(Scale, x[,19:24], type="o", pch=4, lwd=1.5, lty=4)
@@ -811,7 +811,7 @@ lines(Scale, x[,31:36], type="o", pch=6, lwd=1.5, lty=6)
 mtext("A", side=3, line=0.5, adj=0, cex=1.3)
 legend("bottomright", legend=c("Morlet", "Paul", "DOG", "Cauchy", "Squeezed", "Gabor"), lty=1:6, pch=1:6)
 ## derivative input
-plot (Scale, z[,1:6], type="o", ylab=expression(r^2), ylim=c(0.4,1), pch=1, lwd=1.5, main="", las=1, cex=1.1, cex.lab=1.1, cex.axis=1.1)
+plot (Scale, z[,1:6], type="o", ylab=expression(r^2), ylim=c(0,1), pch=1, lwd=1.5, main="", las=1, cex=1.1, cex.lab=1.1, cex.axis=1.1)
 lines(Scale, z[,7:12], type="o", pch=2, lwd=1.5, lty=2)
 lines(Scale, z[,13:18], type="o", pch=3, lwd=1.5, lty=3)
 lines(Scale, z[,19:24], type="o", pch=4, lwd=1.5, lty=4)
@@ -820,7 +820,7 @@ lines(Scale, z[,31:36], type="o", pch=6, lwd=1.5, lty=6)
 mtext("B", side=3, line=0.5, adj=0, cex=1.3)
 # RMSE
 # reflive input
-plot (Scale, y[,1:6], type="o", ylab="RMSE", ylim=c(8,19), pch=1, lwd=1.5, main="", las=1, cex=1.1, cex.lab=1.1, cex.axis=1.1)
+plot (Scale, y[,1:6], type="o", ylab="RMSE", ylim=c(min(y), max(y)), pch=1, lwd=1.5, main="", las=1, cex=1.1, cex.lab=1.1, cex.axis=1.1)
 lines(Scale, y[,7:12], type="o", pch=2, lwd=1.5, lty=2)
 lines(Scale, y[,13:18], type="o", pch=3, lwd=1.5, lty=3)
 lines(Scale, y[,19:24], type="o", pch=4, lwd=1.5, lty=4)
@@ -828,7 +828,7 @@ lines(Scale, y[,25:30], type="o", pch=5, lwd=1.5, lty=5)
 lines(Scale, y[,31:36], type="o", pch=6, lwd=1.5, lty=6)
 mtext("C", side=3, line=0.5, adj=0, cex=1.3)
 ## derivative input
-plot (Scale, r[,1:6], type="o", ylab="RMSE", ylim=c(8,19), pch=1, lwd=1.5, main="", las=1, cex=1.1, cex.lab=1.1, cex.axis=1.1)
+plot (Scale, r[,1:6], type="o", ylab="RMSE", ylim=c(min(r), max(r)), pch=1, lwd=1.5, main="", las=1, cex=1.1, cex.lab=1.1, cex.axis=1.1)
 lines(Scale, r[,7:12], type="o", pch=2, lwd=1.5, lty=2)
 lines(Scale, r[,13:18], type="o", pch=3, lwd=1.5, lty=3)
 lines(Scale, r[,19:24], type="o", pch=4, lwd=1.5, lty=4)
