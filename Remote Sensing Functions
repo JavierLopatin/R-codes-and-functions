@@ -177,4 +177,19 @@ coefficients
     T2 <- convolve(T, rev(Y[dorder,]), type="o")    # convolve(...)
     T2 <- T2[(fc+1):(length(T2)-fc)]
 }
+#-----------------------------------------------------------------------
+#   *** PseudoInvers of a Matrix ***
+#   using singular value decomposition
+#
+pinv <- function (A)
+{
+    s <- svd(A)
+    # D <- diag(s$d); Dinv <- diag(1/s$d)
+    # U <- s$u; V <- s$v
+    # A = U D V'
+    # X = V Dinv U'
+    s$v %*% diag(1/s$d) %*% t(s$u)
+}
+#-----------------------------------------------------------------------
+
 
