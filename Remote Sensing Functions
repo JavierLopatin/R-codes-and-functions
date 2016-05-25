@@ -40,7 +40,7 @@ msVI <- function (B, G, R, NIR, waveB, waveG, waveR, waveNIR){
  
   # GEMI (Global Environment Monitoring Index) 
   n <- (2*(NIR^2- R^2)+1.5*NIR+0.5*R)/(NIR+R+0.5)
-  GEMI <- n*(1-0.25*n)*(R-0.125)/(1???R) 
+  GEMI <- n*(1-0.25*n)*(R-0.125)/(1-R) 
  
   # OSAVI (Optimized Soil Adjusted Vegetation Index)
   OSAVI <- (NIR - R)/(NIR + R + 0.16) 
