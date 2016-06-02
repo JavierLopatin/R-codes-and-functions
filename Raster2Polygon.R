@@ -1,6 +1,6 @@
 ## ------------------------------------------------------------------------------------------------------##
 ## Description: This function allows to convert a raster layer into a polygon using directly the         ##
-## GDAL python script gdal_polygonize.py. This will outperfor in speed the rasterToPolygon function      ##   
+## GDAL python script gdal_polygonize.py. This will outperform in speed the rasterToPolygon function      ##   
 ## of the raster package.                                                                                ##  
 ## Requirements: GDAL install in your computer                                                           ##
 ## ------------------------------------------------------------------------------------------------------##
