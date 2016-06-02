@@ -23,7 +23,7 @@ polygonizeR <- function(x, outshape=NULL, attname='DN', gdalformat = 'ESRI Shape
     writeRaster(x, {f <- tempfile(fileext='.asc')})
     rast.nm <- normalizePath(f)
   } else if (is.character(x)) {
-    rast.nm <- normalizePath(x)
+    rast.nm <- normalizePath(x) 
   } else stop('x must be either a file path (as a character string), or a Raster object.')
   full.c <- sprintf("%1$s %2$s -f '%3$s' %4$s.shp %4$s %5$s", py.c, rast.nm, gdalformat, outshape, attname)
   system(full.c)
