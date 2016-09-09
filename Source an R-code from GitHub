@@ -5,8 +5,8 @@
 source_github <- function(u) {
   # load package
   require(RCurl)
-  
   # read script lines from website and evaluate
   script <- getURL(u, ssl.verifypeer = FALSE)
   eval(parse(text = script), envir=.GlobalEnv)
+  detach("package:RCurl", unload=TRUE)
 } 
