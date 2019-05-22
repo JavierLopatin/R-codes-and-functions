@@ -3,12 +3,10 @@
 #
 # Plot the relative sensitivity of leaf and canopy plant traits in the
 # optical electromagnetic spectrum (400 - 2500 nm) according to PROSAIL
-# radiative transfer model. 
+# radiative transfer model.
 #
 #
 ################################################################################
-
-
 
 require(hsdar)
 setwd("D:/googledrive/fieldcampaign_2016_KA_botgarden/1_analysis/")
