@@ -1,10 +1,22 @@
+
+################################################################################
+#
+# Plot the relative sensitivity of leaf and canopy plant traits in the
+# optical electromagnetic spectrum (400 - 2500 nm) according to PROSAIL
+# radiative transfer model. 
+#
+#
+################################################################################
+
+
+
 require(hsdar)
 setwd("D:/googledrive/fieldcampaign_2016_KA_botgarden/1_analysis/")
 
-
+# load traits values to be used as parameter ranges
 traits <- read.csv("time_series/trait_summary_global.csv", sep="")
 
-no_sim = 100
+no_sim = 10000
 
 # lai
 parameter <- data.frame(N = c(rep(1.5, no_sim)),
