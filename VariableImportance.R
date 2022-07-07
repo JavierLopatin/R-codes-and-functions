@@ -71,41 +71,74 @@ str(data)
 var$class <- data$degra 
 str(var)
 
-# bootstrapping
-boot <- createResample(var$class, times = 500, list = TRUE)
+# variables
+X=data[,3:ncol(dta)]
+Y=data$vegclass
 
-# crear matris para almacenar resultados
-kappa <- matrix(nrow = 100, ncol = (ncol(var)-1))
-colnames(kappa) = colnames(var)[1:36]
-for (i in 1:nrow(kappa)){ # 500 bootstraps
-  print(i)
-  train <- var[boot[[i]],]
-  val   <- var[-boot[[i]],]
-  
-  PLS <- train(class ~., data=train, method = "pls",  tuneLength=10, 
-               trControl = tr_control, preProcess = c("center", "scale"), 
-               metric = "Kappa", maximize = T)
-  pred    <- predict(PLS, val)
-  mat_pls <- confusionMatrix(pred, val$class)
-  
-  for (k in 1:(ncol(var)-1)){ # loop through variables
-    validar_rand  <- val
-    kappp = c()
-    for (j in 1:100){ # 10 random replaces per variable
-      validar_rand[,k]  <- runif(nrow(val), min=min(val[,k]), max=max(val[,k]))
-      pred_rand <- predict(PLS, validar_rand)
-      mat_pls_rand <- confusionMatrix(pred_rand, val$class)
-      kappp[j] <- mat_pls_rand$overall[2]
+# get best ncomp values with caret
+tr_control <- trainControl(method = 'cv', number = 10)
+
+# train model using vegetation clases
+PLS <- train(x=X, y=Y , method = "pls",  tuneLength=20, 
+             trControl = tr_control, preProcess = c("center", "scale"), 
+             metric = "Kappa", maximize = T, na.action=na.omit)
+PLS
+
+# function
+relPLSimp = function(X, Y, ncomp, iter=100){
+    #############################################################
+    #
+    # Estimate relative importance using PLS-DA by using Kappa 
+    # and predicting values in random variables
+    #
+    # Y = observed classes (vector of Factor class)
+    # X = predictors (data frame of numerical variables)
+    # iter = number of bootstrap iterations (intener)
+    #
+    ##############################################################
+     
+    kappa <- matrix(nrow = iter, ncol = ncol(X))
+    colnames(kappa) = colnames(X)
+    
+    boot <- createResample(Y, times = iter, list = TRUE)
+    
+    pb <- txtProgressBar(min = 0, max = iter, style = 3, width = 50, char = "=") 
+
+   for (i in 1:iter){ # bootstraps
+          
+      train_X <- X[boot[[i]],]
+      train_Y <- Y[boot[[i]]]  
+      val_X   <- X[-boot[[i]],]
+      val_Y   <- Y[-boot[[i]]]
+
+      PLS  <- caret::plsda(x = train_X, y = train_Y, ncomp = ncomp, probMethod = 'softmax')
+      pred <- predict(PLS, val_X)
+
+      mat_pls <- confusionMatrix(pred, val_Y)
+
+      for (k in 1:(ncol(X))){ # loop through variables
+        validar_rand  <- val_X
+        kappp = c()
+         for (j in 1:10){ # 10 random replaces per variable
+             validar_rand[,k]  <- runif(nrow(validar_rand), min=min(validar_rand[,k]), max=max(validar_rand[,k]))
+             pred_rand <- predict(PLS, validar_rand)
+             mat_pls_rand <- confusionMatrix(pred_rand, val_Y)
+             kappp[j] <- mat_pls_rand$overall[2]
+          }
+        # delta kappa
+        kappa[i,k] <- mat_pls$overall[2] - median(kappp)
+      }
+    setTxtProgressBar(pb, i)
     }
-    # delta kappa
-    kappa[i,k] <- mat_pls$overall[2] - median(kappp)
-  }
-  boxplot((kappa), las=2, outline=F)
+    close(pb)
+    return(kappa)
 }
 
 
-save.image('varImp.RData')
+imp = relPLSimp(X=X, Y=Y, ncomp=10, iter = 100)
+imp
 
+save.image('varImp.RData')
 
 svg(filename = 'kappa.svg', width = 10, height = 5)
 boxplot((kappa), las=2, outline=F)
